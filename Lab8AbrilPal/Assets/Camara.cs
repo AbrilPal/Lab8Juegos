@@ -4,12 +4,9 @@ using UnityEngine;
 
 public class Camara : MonoBehaviour
 {
-    public Camara FPSCamara;
-    public float horizontalSpeed;
-    public float verticalSpeed;
-
-    float h;
-    float v;
+    
+    bool on = true;
+   
     // Start is called before the first frame update
     void Start()
     {
@@ -19,24 +16,28 @@ public class Camara : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        h = horizontalSpeed * Input.GetAxis("Mouse X");
-        v = verticalSpeed * Input.GetAxis("Mouse Y");
-
-        transform.Rotate(0, h, 0);
-        FPSCamara.transform.Rotate(-v, 0, 0);
-
-        if (Input.GetKey(KeyCode.W))
+        if (Input.GetMouseButtonDown(0))
         {
-            transform.Translate(0, 0, 0.1f);
-        }else if (Input.GetKey(KeyCode.S))
-        {
-            transform.Translate(0, 0, -0.1f);
-        }else if (Input.GetKey(KeyCode.A))
-        {
-            transform.Translate(-0.1f, 0, 0);
-        }else if (Input.GetKey(KeyCode.D))
-        {
-            transform.Translate(0.1f, 0, 0);
+            if (on)
+            {
+                on = false;
+                GetComponent<Light>().intensity = 0;
+            }else if(on == false)
+            {
+                on = true;
+                GetComponent<Light>().intensity = 20;
+            }
         }
+      
     }
+
+  /*  private void OnTriggerStay(Collider other)
+    {
+        other.gameObject.GetComponent<Light>().intensity = Mathf.Sin(Time.time);
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        other.gameObject.GetComponent<Light>().intensity = 0;
+    }*/
 }
